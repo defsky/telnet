@@ -13,15 +13,15 @@ type tclient struct {
 	conn       net.Conn
 }
 
-// NewNVT return a new Network Virtual Terminal
-func NewClient(server string, w io.Writer) (NVT, error) {
-	conn, err := net.DialTimeout("tcp", server, 30*time.Second)
+// NewClient return a new Network Virtual Terminal
+func NewClient(host string, w io.Writer) (NVT, error) {
+	conn, err := net.DialTimeout("tcp", host, 30*time.Second)
 	if err != nil {
 		return nil, err
 	}
 
 	return &tclient{
-		remoteAddr: server,
+		remoteAddr: host,
 		out:        w,
 		conn:       conn,
 	}, nil
@@ -36,4 +36,8 @@ func (c *tclient) Write(p []byte) (n int, err error) {
 func (c *tclient) Read(p []byte) (n int, err error) {
 
 	return
+}
+
+func (c *tclient) Close() {
+	c.conn.Close()
 }
