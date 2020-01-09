@@ -1,3 +1,3 @@
-module github.com/defsky/telnet-client
+module github.com/defsky/telnet
 
 go 1.13
